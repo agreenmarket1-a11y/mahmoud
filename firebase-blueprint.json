@@ -1,0 +1,104 @@
+{
+  "entities": {
+    "Employee": {
+      "title": "Employee",
+      "description": "Employee information including salary and status",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "idNumber": { "type": "string" },
+        "nationality": { "type": "string" },
+        "jobTitle": { "type": "string" },
+        "baseSalary": { "type": "number" },
+        "housingAllowance": { "type": "number" },
+        "transportAllowance": { "type": "number" },
+        "totalSalary": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "on_leave", "inactive"] },
+        "linkedEntityId": { "type": "string" },
+        "linkedEntityType": { "type": "string", "enum": ["project", "farm"] },
+        "iqamaExpiry": { "type": "string" },
+        "lateSalaryCount": { "type": "number" },
+        "unpaidSalaryTotal": { "type": "number" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["name", "idNumber", "baseSalary"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Financial transaction record",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["sale", "purchase", "operational_expense"] },
+        "date": { "type": "string" },
+        "amount": { "type": "number" },
+        "taxAmount": { "type": "number" },
+        "taxNumber": { "type": "string" },
+        "totalWithTax": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["cash", "bank", "check", "credit"] },
+        "description": { "type": "string" },
+        "linkedEntityId": { "type": "string" },
+        "linkedEntityType": { "type": "string", "enum": ["project", "farm"] },
+        "customerName": { "type": "string" },
+        "category": { "type": "string" },
+        "invoiceImageUrl": { "type": "string" },
+        "fileUrl": { "type": "string" }
+      },
+      "required": ["type", "date", "amount"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Construction or development project",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "completed", "on_hold"] },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" }
+      },
+      "required": ["name", "startDate"]
+    },
+    "Farm": {
+      "title": "Farm",
+      "description": "Agricultural land record",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "location": { "type": "string" },
+        "size": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "inactive"] }
+      },
+      "required": ["name", "location"]
+    },
+    "FileRecord": {
+      "title": "FileRecord",
+      "description": "Record of an uploaded file, potentially with Excel data",
+      "type": "object",
+      "properties": {
+        "fileName": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "uploadDate": { "type": "string" },
+        "linkedEntityId": { "type": "string" },
+        "linkedEntityType": { "type": "string" },
+        "data": { "type": "array", "items": { "type": "object" } }
+      }
+    }
+  },
+  "firestore": {
+    "/employees/{employeeId}": { "schema": "Employee", "description": "Employee records" },
+    "/invoices/{invoiceId}": { "schema": "Invoice", "description": "Accounting records" },
+    "/projects/{projectId}": { "schema": "Project", "description": "Project records" },
+    "/farms/{farmId}": { "schema": "Farm", "description": "Farm records" },
+    "/files/{fileId}": { "schema": "FileRecord", "description": "Uploaded files and Excel data" },
+    "/family/{memberId}": { "schema": { "type": "object" }, "description": "Family members" },
+    "/home_expenses/{expenseId}": { "schema": { "type": "object" }, "description": "Home expenses" },
+    "/events/{eventId}": { "schema": { "type": "object" }, "description": "Home events" },
+    "/home_files/{fileId}": { "schema": { "type": "object" }, "description": "Home files" },
+    "/settings_tax/{id}": { "schema": { "type": "object" }, "description": "Tax settings" },
+    "/attendance/{id}": { "schema": { "type": "object" }, "description": "Attendance records" },
+    "/leaves/{id}": { "schema": { "type": "object" }, "description": "Leave requests" },
+    "/loans/{id}": { "schema": { "type": "object" }, "description": "Employee loans" },
+    "/penalties/{id}": { "schema": { "type": "object" }, "description": "Employee penalties" },
+    "/ai_history/{id}": { "schema": { "type": "object" }, "description": "AI chat history" }
+  }
+}
